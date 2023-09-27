@@ -30,7 +30,9 @@
 
 ;;; Code:
 
-(require 'all-the-icons)
+;;(add-to-list 'load-path "~/.local/share/icons-in-terminal/")
+;;(load-file "~/.local/share/icons-in-terminal/icons-in-terminal.el")
+(require 'icons-in-terminal)
 
 (defgroup nerd-icons-completion nil
   "Add icons to completion candidates."
@@ -41,7 +43,7 @@
 (defface nerd-icons-completion-dir-face
   '((t nil))
   "Face for the directory icon."
-  :group 'all-the-icons-faces)
+  :group 'icons-in-terminal-faces)
 
 (cl-defgeneric nerd-icons-completion-get-icon (_cand _cat)
   "Return the icon for the candidate CAND of completion category CAT."
@@ -51,9 +53,9 @@
   "Return the icon for the candidate CAND of completion category file."
   (cond ((string-match-p "\\/$" cand)
          (concat
-          (all-the-icons-icon-for-dir cand :face 'nerd-icons-completion-dir-face)
+          (icons-in-terminal-icon-for-dir cand :face 'nerd-icons-completion-dir-face)
           " "))
-        (t (concat (all-the-icons-icons-icon-for-file cand) " "))))
+        (t (concat (icons-in-terminal-icon-for-file cand) " "))))
 
 (cl-defmethod nerd-icons-completion-get-icon (cand (_cat (eql project-file)))
   "Return the icon for the candidate CAND of completion category project-file."
@@ -63,7 +65,7 @@
   "Return the icon for the candidate CAND of completion category buffer."
   (let* ((mode (buffer-local-value 'major-mode (get-buffer cand)))
          (icon (all-the-icons-icon-for-mode mode))
-         (parent-icon (all-the-icons-icons-icon-for-mode
+         (parent-icon (all-the-icons-icon-for-mode
                        (get mode 'derived-mode-parent))))
     (concat
      (if (symbolp icon)
